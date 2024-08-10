@@ -27,8 +27,22 @@ namespace MedalDownloaderBypass
             string url = UrlTextBox.Text;
             if (!string.IsNullOrWhiteSpace(url) || url.Contains("https://medal.tv/"))
             {
-                MessageBox.Show($"Attempting to download the clip...\n({url})");
-                _ = SaveFile.SaveClipAsync(url);
+                MessageBoxResult result = MessageBox.Show
+                (
+                    $"Are you sure you want to download:\n({url})?",
+                    "Download",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question
+                );
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    _ = SaveFile.SaveClipAsync(url); //Run download and save process
+                }
+                else if (result == MessageBoxResult.No)
+                {
+                    return;
+                }
             }
             else
             {
@@ -44,7 +58,7 @@ namespace MedalDownloaderBypass
 
         private void OnQuitAppButtonClick(object sender, RoutedEventArgs e)
         {
-            Process.GetCurrentProcess().Kill();
+            try { Process.GetCurrentProcess().Kill(); } catch { Environment.Exit(0); }
         }
     }
 }

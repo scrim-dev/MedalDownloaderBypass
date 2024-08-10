@@ -22,7 +22,7 @@ namespace MedalDownloaderBypass.Downloader
 
                 if (response["valid"].Value<bool>())
                 {
-                    MessageBox.Show("File is valid! Press 'OK' to continue!");
+                    MessageBox.Show("File is valid! Press 'OK' to continue!", "Ready!", MessageBoxButton.OK, MessageBoxImage.Information);
                     string fileUrl = response["src"].Value<string>();
                     await DownloadFileAsync(fileUrl);
                 }
